@@ -40,6 +40,13 @@ class RestaurantPizza(db.Model, SerializerMixin):
     restaurant_id = db.Column(db.Integer, db.ForeignKey('restaurants.id'), nullable=False)
     pizza_id = db.Column(db.Integer, db.ForeignKey('pizzas.id'), nullable=False)
 
+    def __init__(self, price, restaurant_id, pizza_id):
+        if not (1 <= price <= 30):
+            raise ValueError("Price must be between 1 and 30")
+        self.price = price
+        self.restaurant_id = restaurant_id
+        self.pizza_id = pizza_id
+
 
 
     def __repr__(self):

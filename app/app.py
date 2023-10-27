@@ -32,6 +32,24 @@ class Restaurants(Resource):
         return response
 api.add_resource(Restaurants, '/restaurants')
 
+class RestaurantById(Resource):
+    def get(self, restaurant_id):
+        restaurant = Restaurant.query.get(restaurant_id)
+        if restaurant:
+            restaurant_data = restaurant.to_dict()
+            response = make_response(
+                jsonify(restaurant_data),
+                200,
+            )
+        else:
+            response = make_response(
+                jsonify({"error": "Restaurant not found"}),
+                404,
+            )
+        return response
+
+api.add_resource(RestaurantById, '/restaurants/<int:restaurant_id>')
+
 
 
 
